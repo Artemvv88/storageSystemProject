@@ -6,6 +6,7 @@
 #include <QString>
 #include <QFile>
 #include <QDataStream>
+#include <QCryptographicHash>
 
 #include "systemuser.h"
 #include "task.h"
@@ -37,6 +38,10 @@ public:
     QVector<SystemUser *> users() const;
     QVector<Task *> tasks() const;
     QVector<Rack *> racks() const;
+
+    SystemUser* getUserById(UserID userId);
+    SystemUser* getUserByLogin(const QString &login);
+    SystemUser* registerUser(const QString &login, const QString &password, SystemUserType userType);
 };
 
 #endif // DATABASE_H

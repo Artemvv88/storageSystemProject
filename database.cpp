@@ -158,3 +158,39 @@ QVector<Rack *> Database::racks() const
 {
     return _racks;
 }
+
+SystemUser *Database::getUserById(UserID userId)
+{
+    for (auto _user : _users) {
+        if (_user->id() == userId) {
+            return _user;
+        }
+    }
+
+    return nullptr;
+}
+
+SystemUser *Database::getUserByLogin(const QString &login)
+{
+    for (auto _user : _users) {
+        if (_user->login() == login) {
+            return _user;
+        }
+    }
+
+    return nullptr;
+}
+
+SystemUser *Database::registerUser(const QString &login, const QString &password, SystemUserType userType)
+{
+    if (getUserByLogin(login) != nullptr) {
+        return nullptr;
+    }
+
+    auto user = new SystemUser();
+    user->_id = _users.length();
+    user->_login = login;
+    user->_passwordHash = QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex());
+    user->_userType = userType;
+    return user;
+}

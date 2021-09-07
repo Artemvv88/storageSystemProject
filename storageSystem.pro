@@ -12,6 +12,7 @@ SOURCES += \
     database.cpp \
     main.cpp \
     loginwindow.cpp \
+    mainwindow.cpp \
     product.cpp \
     rack.cpp \
     registrationwindow.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
 HEADERS += \
     database.h \
     loginwindow.h \
+    mainwindow.h \
     product.h \
     rack.h \
     registrationwindow.h \
@@ -29,6 +31,7 @@ HEADERS += \
 
 FORMS += \
     loginwindow.ui \
+    mainwindow.ui \
     registrationwindow.ui
 
 # Default rules for deployment.
