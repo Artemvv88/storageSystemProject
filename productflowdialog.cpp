@@ -15,8 +15,9 @@ ProductFlowDialog::~ProductFlowDialog()
 
 void ProductFlowDialog::drawList()
 {
+    ui->historyList->clear();
     for (auto flowItem : product->flow()) {
-        ui->historyList->addItem(tr("Дата: %1\nПриход: %2").arg(flowItem.first.toString("dd.MM.yyyy")).arg(flowItem.second));
+        ui->historyList->addItem(tr("Дата: %1\nПриход: %2").arg(flowItem.first.toString("dd.MM.yyyy HH:mm:ss")).arg(flowItem.second));
     }
 }
 

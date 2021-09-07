@@ -9,7 +9,7 @@
 
 
 typedef quint32 ProductID;
-typedef QPair<QDate, int> FlowItem;
+typedef QPair<QDateTime, int> FlowItem;
 
 class Product
 {

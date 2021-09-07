@@ -68,9 +68,9 @@ void Database::readDB()
                 quint32 flowCount = 0;
                 in >> flowCount;
                 for (quint32 k = 0; k < flowCount; k++) {
-                    int flowAmount = 0;
-                    in >> flowAmount;
-                    product->_flow.append(flowAmount);
+                    FlowItem flowItem;
+                    in >> flowItem;
+                    product->_flow.append(flowItem);
                 }
                 rack->_products.append(product);
             }

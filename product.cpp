@@ -37,7 +37,7 @@ QVector<FlowItem> Product::flow() const
 
 void Product::addFlowItem(int flowAmount)
 {
-    _flow.append(FlowItem(QDate::currentDate(), flowAmount));
+    _flow.append(FlowItem(QDateTime::currentDateTime(), flowAmount));
 }
 
 void Product::removeFlowItemAt(int index)

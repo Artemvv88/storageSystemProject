@@ -235,7 +235,7 @@ void MainWindow::on_racksTable_clicked(const QModelIndex&)
         ui->productsTable->setItem(rowid, 0, new QTableWidgetItem(QString::number(product->id())));
         ui->productsTable->setItem(rowid, 1, new QTableWidgetItem(product->title()));
         ui->productsTable->setItem(rowid, 2, new QTableWidgetItem(product->info()));
-        ui->productsTable->setItem(rowid, 3, new QTableWidgetItem(product->size()));
+        ui->productsTable->setItem(rowid, 3, new QTableWidgetItem(QString::number(product->size())));
     }
     ui->productsTable->resizeRowsToContents();
 }
@@ -343,6 +343,4 @@ void MainWindow::on_lookupFlowBtn_clicked()
     ProductFlowDialog d(this);
     d.setProduct(product);
     d.exec();
-
-    on_racksTable_clicked(QModelIndex());
 }
