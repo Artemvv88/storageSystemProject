@@ -29,6 +29,7 @@ public:
     QVector<Product *> products() const;
     void addProduct(Product *product);
     Product *getProductById(ProductID productId);
+    void removeProductById(ProductID productId);
 
     friend class Database;
     friend class NewRackDialog;

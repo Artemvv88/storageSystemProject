@@ -32,10 +32,13 @@ void MainWindow::setUser(SystemUser *user)
     if (_user->userType() != SystemUserType::ADMINISTRATOR) {
         ui->tabHost->removeTab(0); // Users tab
         ui->addRackBtn->hide();
+        ui->removeRackBtn->hide();
         if (_user->userType() != SystemUserType::STOREKEEPER) {
             ui->addProductBtn->hide();
             ui->addTask->hide();
             ui->markCompletedButton->hide();
+            ui->removeProductBtn->hide();
+            ui->removeTaskBtn->hide();
         }
     }
 }
@@ -299,8 +302,8 @@ void MainWindow::on_tasksTable_doubleClicked(const QModelIndex&)
     if (_user->userType() == SystemUserType::WORKER) return;
 
     auto item = ui->tasksTable->selectionModel()->selectedRows()[0];
-    TaskID rid = item.data(Qt::DisplayRole).toUInt();
-    auto task = Database::instance()->getTaskById(rid);
+    TaskID tid = item.data(Qt::DisplayRole).toUInt();
+    auto task = Database::instance()->getTaskById(tid);
     if (task == nullptr) {
         QMessageBox::critical(this, "Ошибка", "Выбрана несуществующая задача! Обратитесь к администратору.");
         return;
@@ -347,4 +350,80 @@ void MainWindow::on_lookupFlowBtn_clicked()
     ProductFlowDialog d(this);
     d.setProduct(product);
     d.exec();
+}
+
+void MainWindow::on_removeUserBtn_clicked()
+{
+    auto item = ui->usersTable->selectionModel()->selectedRows()[0];
+    UserID uid = item.data(Qt::DisplayRole).toUInt();
+    if (uid == _user->id()) {
+        QMessageBox::critical(this, "Ошибка", "Нельзя удалить свой аккаунт!");
+        return;
+    }
+
+    Database::instance()->removeUserById(uid);
+
+    emit needUiUpdate();
+}
+
+void MainWindow::on_removeRackBtn_clicked()
+{
+    if (ui->racksTable->selectionModel()->selectedRows().length() != 1) {
+        QMessageBox::critical(this, "Ошибка", "Выберите один стеллаж.");
+        return;
+    }
+    auto item1 = ui->racksTable->selectionModel()->selectedRows()[0];
+    RackID rid = item1.data(Qt::DisplayRole).toUInt();
+    Database::instance()->removeRackById(rid);
+
+    emit needUiUpdate();
+}
+
+void MainWindow::on_removeProductBtn_clicked()
+{
+    Rack *rack = nullptr;
+    try {
+        if (ui->racksTable->selectionModel()->selectedRows().length() != 1) {
+            throw std::runtime_error("Выберите один стеллаж.");
+        }
+        auto item1 = ui->racksTable->selectionModel()->selectedRows()[0];
+        RackID rid = item1.data(Qt::DisplayRole).toUInt();
+        rack = Database::instance()->getRackById(rid);
+        if (rack == nullptr) {
+            throw std::runtime_error("Выбран несуществующий стеллаж! Обратитесь к администратору.");
+        }
+
+        if (ui->productsTable->selectionModel()->selectedRows().length() != 1) {
+            throw std::runtime_error("Выберите один продукт.");
+        }
+        auto item2 = ui->productsTable->selectionModel()->selectedRows()[0];
+        ProductID pid = item2.data(Qt::DisplayRole).toUInt();
+        rack->removeProductById(pid);
+    } catch (const std::runtime_error &e) {
+        QMessageBox::critical(this, "Ошибка", e.what());
+        return;
+    }
+
+    on_racksTable_clicked(QModelIndex());
+}
+
+void MainWindow::on_removeTaskBtn_clicked()
+{
+    if (_user->userType() == SystemUserType::WORKER) return;
+
+    auto item = ui->tasksTable->selectionModel()->selectedRows()[0];
+    TaskID tid = item.data(Qt::DisplayRole).toUInt();
+    auto task = Database::instance()->getTaskById(tid);
+    if (task == nullptr) {
+        return;
+    }
+
+    if (_user->userType() == task->executorGroup()) {
+        QMessageBox::critical(this, "Ошибка", "Нельзя удалить задачу своей группы!");
+        return;
+    }
+
+    Database::instance()->removeTaskById(tid);
+
+    emit needUiUpdate();
 }

@@ -215,6 +215,14 @@ SystemUser *Database::registerUser(const QString &login, const QString &password
     return user;
 }
 
+void Database::removeUserById(UserID userId)
+{
+    auto user = getUserById(userId);
+    if (user != nullptr) {
+        _users.removeOne(user);
+    }
+}
+
 bool Database::spaceOccupied(quint32 position)
 {
     for (auto r : _racks) {
@@ -242,6 +250,14 @@ Rack *Database::getRackById(RackID rackId)
     return nullptr;
 }
 
+void Database::removeRackById(RackID rackId)
+{
+    auto rack = getRackById(rackId);
+    if (rack != nullptr) {
+        _racks.removeOne(rack);
+    }
+}
+
 void Database::saveTask(Task *newTask)
 {
     _tasks.append(newTask);
@@ -256,4 +272,12 @@ Task *Database::getTaskById(TaskID taskId)
     }
 
     return nullptr;
+}
+
+void Database::removeTaskById(TaskID taskId)
+{
+    auto task = getTaskById(taskId);
+    if (task != nullptr) {
+        _tasks.removeOne(task);
+    }
 }

@@ -55,7 +55,7 @@
     <item>
      <widget class="QTabWidget" name="tabHost">
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="usersTab">
        <attribute name="title">
@@ -100,11 +100,22 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="addUserBtn">
-          <property name="text">
-           <string>Добавить пользователя</string>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_5">
+          <item>
+           <widget class="QPushButton" name="addUserBtn">
+            <property name="text">
+             <string>Добавить пользователя</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="removeUserBtn">
+            <property name="text">
+             <string>Удалить пользователя</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -153,11 +164,22 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="addRackBtn">
-             <property name="text">
-              <string>Добавить стеллаж</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QPushButton" name="addRackBtn">
+               <property name="text">
+                <string>Добавить стеллаж</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="removeRackBtn">
+               <property name="text">
+                <string>Удалить стеллаж</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -207,6 +229,13 @@
               <widget class="QPushButton" name="addProductBtn">
                <property name="text">
                 <string>Добавить товар</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="removeProductBtn">
+               <property name="text">
+                <string>Удалить товар</string>
                </property>
               </widget>
              </item>
@@ -281,6 +310,13 @@
               <widget class="QPushButton" name="addTask">
                <property name="text">
                 <string>Добавить задачу</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="removeTaskBtn">
+               <property name="text">
+                <string>Удалить задачу</string>
                </property>
               </widget>
              </item>

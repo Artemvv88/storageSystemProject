@@ -50,3 +50,11 @@ Product *Rack::getProductById(ProductID productId)
 
     return nullptr;
 }
+
+void Rack::removeProductById(ProductID productId)
+{
+    auto product = getProductById(productId);
+    if (product != nullptr) {
+        _products.removeOne(product);
+    }
+}
