@@ -13,13 +13,15 @@ SOURCES += \
     loginwindow.cpp \
     product.cpp \
     rack.cpp \
-    systemuser.cpp
+    systemuser.cpp \
+    task.cpp
 
 HEADERS += \
     loginwindow.h \
     product.h \
     rack.h \
-    systemuser.h
+    systemuser.h \
+    task.h
 
 FORMS += \
     loginwindow.ui
