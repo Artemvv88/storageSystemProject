@@ -27,6 +27,8 @@ public:
     quint32 capacity() const;
     void setCapacity(const quint32 &capacity);
     QVector<Product *> products() const;
+    void addProduct(Product *product);
+    Product *getProductById(ProductID productId);
 
     friend class Database;
     friend class NewRackDialog;

@@ -34,3 +34,19 @@ void Rack::setCapacity(const quint32 &capacity)
 {
     _capacity = capacity;
 }
+
+void Rack::addProduct(Product *product)
+{
+    _products.push_back(product);
+}
+
+Product *Rack::getProductById(ProductID productId)
+{
+    for (auto product : _products) {
+        if (product->id() == productId) {
+            return product;
+        }
+    }
+
+    return nullptr;
+}

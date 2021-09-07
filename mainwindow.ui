@@ -55,7 +55,7 @@
     <item>
      <widget class="QTabWidget" name="tabHost">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="usersTab">
        <attribute name="title">
@@ -69,7 +69,32 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <widget class="QTableWidget" name="usersTable"/>
+            <widget class="QTableWidget" name="usersTable">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
+             <property name="selectionMode">
+              <enum>QAbstractItemView::SingleSelection</enum>
+             </property>
+             <property name="selectionBehavior">
+              <enum>QAbstractItemView::SelectRows</enum>
+             </property>
+             <column>
+              <property name="text">
+               <string>ID</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Логин</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Роль</string>
+              </property>
+             </column>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -96,6 +121,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <widget class="QTableWidget" name="racksTable">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
              <property name="selectionMode">
               <enum>QAbstractItemView::SingleSelection</enum>
              </property>
@@ -142,6 +170,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
             <widget class="QTableWidget" name="productsTable">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
              <property name="selectionMode">
               <enum>QAbstractItemView::SingleSelection</enum>
              </property>
@@ -166,11 +197,22 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="addProductBtn">
-             <property name="text">
-              <string>Добавить товар</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QPushButton" name="addProductBtn">
+               <property name="text">
+                <string>Добавить товар</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="lookupFlowBtn">
+               <property name="text">
+                <string>Просмотреть приход товара</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>
@@ -190,6 +232,9 @@
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <widget class="QTableWidget" name="tasksTable">
+             <property name="editTriggers">
+              <set>QAbstractItemView::NoEditTriggers</set>
+             </property>
              <property name="selectionMode">
               <enum>QAbstractItemView::SingleSelection</enum>
              </property>

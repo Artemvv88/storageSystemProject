@@ -6,7 +6,7 @@
 
 
 enum class SystemUserType {
-    ERROR, ADMINISTRATOR, STOREKEEPER, WORKER
+    ADMINISTRATOR, STOREKEEPER, WORKER, ERROR
 };
 
 typedef quint32 UserID;

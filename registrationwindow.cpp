@@ -24,6 +24,8 @@ void RegistrationWindow::setUser(SystemUser *user)
     ui->titleLabel->setText("Редактирование пользователя");
     ui->registerBtn->setText("Сохранить");
     ui->loginInput->setDisabled(true);
+    ui->loginInput->setText(user->login());
+    ui->accountTypeDropdown->setCurrentIndex((int)user->userType());
 }
 
 void RegistrationWindow::closeEvent(QCloseEvent *event)
@@ -43,6 +45,11 @@ void RegistrationWindow::on_registerBtn_clicked()
     }
 
     if (user == nullptr) {
+        if (user == nullptr && qobject_cast<MainWindow*>(parent()) == nullptr && ui->accountTypeDropdown->currentIndex() == 0) {
+            QMessageBox::critical(this, "Ошибка", "Только администратор может создавать других администраторов");
+            return;
+        }
+
         auto _user = Database::instance()->registerUser(
                         ui->loginInput->text(),
                         ui->passwordInput->text(),

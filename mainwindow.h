@@ -49,10 +49,12 @@ private slots:
     void on_addProductBtn_clicked();
     void on_markCompletedButton_clicked();
     void on_addTask_clicked();
-    void on_usersTable_doubleClicked(const QModelIndex &index);
-    void on_racksTable_doubleClicked(const QModelIndex &index);
-    void on_productsTable_doubleClicked(const QModelIndex &index);
-    void on_tasksTable_doubleClicked(const QModelIndex &index);
+    void on_usersTable_doubleClicked(const QModelIndex&);
+    void on_racksTable_clicked(const QModelIndex&);
+    void on_racksTable_doubleClicked(const QModelIndex&);
+    void on_productsTable_doubleClicked(const QModelIndex&);
+    void on_tasksTable_doubleClicked(const QModelIndex&);
+    void on_lookupFlowBtn_clicked();
 };
 
 #endif // MAINWINDOW_H

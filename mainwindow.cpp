@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabHost->setCurrentIndex(0);
 
     connect(this, &MainWindow::needUiUpdate, this, &MainWindow::updateUi);
+
+    emit needUiUpdate();
 }
 
 MainWindow::~MainWindow()
@@ -40,7 +42,78 @@ void MainWindow::setUser(SystemUser *user)
 
 void MainWindow::updateUi()
 {
-
+    {
+        ui->usersTable->setRowCount(0);
+        for (auto user : Database::instance()->users()) {
+            int rowid = ui->usersTable->rowCount();
+            ui->usersTable->insertRow(rowid);
+            ui->usersTable->setItem(rowid, 0, new QTableWidgetItem(QString::number(user->id())));
+            ui->usersTable->setItem(rowid, 1, new QTableWidgetItem(user->login()));
+            QString userRole;
+            switch (user->userType()) {
+                default:
+                case SystemUserType::ERROR:
+                    userRole = "Ошибка";
+                    break;
+                case SystemUserType::ADMINISTRATOR:
+                    userRole = "Администратор";
+                    break;
+                case SystemUserType::STOREKEEPER:
+                    userRole = "Кладовщик";
+                    break;
+                case SystemUserType::WORKER:
+                    userRole = "Рабочий";
+                    break;
+            }
+            ui->usersTable->setItem(rowid, 2, new QTableWidgetItem(userRole));
+        }
+        ui->usersTable->resizeRowsToContents();
+    }
+    {
+        ui->productsTable->setRowCount(0);
+        ui->racksTable->setRowCount(0);
+        for (auto rack : Database::instance()->racks()) {
+            int rowid = ui->racksTable->rowCount();
+            ui->racksTable->insertRow(rowid);
+            ui->racksTable->setItem(rowid, 0, new QTableWidgetItem(QString::number(rack->id())));
+            ui->racksTable->setItem(rowid, 1, new QTableWidgetItem(QString::number(rack->storagePosition())));
+            ui->racksTable->setItem(rowid, 2, new QTableWidgetItem(QString::number(rack->capacity())));
+            int usedSpace = 0;
+            for (auto product : rack->products()) {
+                usedSpace += product->size();
+            }
+            ui->racksTable->setItem(rowid, 3, new QTableWidgetItem(QString::number(rack->capacity() - usedSpace)));
+        }
+        ui->racksTable->resizeRowsToContents();
+    }
+    {
+        ui->tasksTable->setRowCount(0);
+        for (auto task : Database::instance()->tasks()) {
+            int rowid = ui->tasksTable->rowCount();
+            ui->tasksTable->insertRow(rowid);
+            ui->tasksTable->setItem(rowid, 0, new QTableWidgetItem(QString::number(task->id())));
+            ui->tasksTable->setItem(rowid, 1, new QTableWidgetItem(task->description()));
+            QString groupRole;
+            switch (task->executorGroup()) {
+                default:
+                case SystemUserType::ERROR:
+                    groupRole = "Ошибка";
+                    break;
+                case SystemUserType::ADMINISTRATOR:
+                    groupRole = "Администратор";
+                    break;
+                case SystemUserType::STOREKEEPER:
+                    groupRole = "Кладовщик";
+                    break;
+                case SystemUserType::WORKER:
+                    groupRole = "Рабочий";
+                    break;
+            }
+            ui->tasksTable->setItem(rowid, 2, new QTableWidgetItem(groupRole));
+            ui->tasksTable->setItem(rowid, 3, new QTableWidgetItem(task->done()? "Да" : "Нет"));
+        }
+        ui->tasksTable->resizeRowsToContents();
+    }
 }
 
 void MainWindow::on_addUserBtn_clicked()
@@ -86,6 +159,7 @@ void MainWindow::on_addProductBtn_clicked()
         delete p;
         return;
     }
+    rack->addProduct(p);
 
     emit needUiUpdate();
 }
@@ -123,9 +197,10 @@ void MainWindow::on_addTask_clicked()
     emit needUiUpdate();
 }
 
-void MainWindow::on_usersTable_doubleClicked(const QModelIndex &index)
+void MainWindow::on_usersTable_doubleClicked(const QModelIndex&)
 {
-    UserID uid = index.siblingAtRow(0).data().toUInt();
+    auto item = ui->usersTable->selectionModel()->selectedRows()[0];
+    UserID uid = item.data(Qt::DisplayRole).toUInt();
     auto user = Database::instance()->getUserById(uid);
     if (user == nullptr) {
         QMessageBox::critical(this, "Ошибка", "Выбран несуществующий пользовватель! Обратитесь к администратору.");
@@ -143,17 +218,43 @@ void MainWindow::on_usersTable_doubleClicked(const QModelIndex &index)
     emit needUiUpdate();
 }
 
-void MainWindow::on_racksTable_doubleClicked(const QModelIndex &index)
+void MainWindow::on_racksTable_clicked(const QModelIndex&)
+{
+    auto item = ui->racksTable->selectionModel()->selectedRows()[0];
+    RackID rid = item.data(Qt::DisplayRole).toUInt();
+    auto rack = Database::instance()->getRackById(rid);
+    if (rack == nullptr) {
+        QMessageBox::critical(this, "Ошибка", "Выбран несуществующий стеллаж! Обратитесь к администратору.");
+        return;
+    }
+
+    ui->productsTable->setRowCount(0);
+    for (auto product : rack->products()) {
+        int rowid = ui->productsTable->rowCount();
+        ui->productsTable->insertRow(rowid);
+        ui->productsTable->setItem(rowid, 0, new QTableWidgetItem(QString::number(product->id())));
+        ui->productsTable->setItem(rowid, 1, new QTableWidgetItem(product->title()));
+        ui->productsTable->setItem(rowid, 2, new QTableWidgetItem(product->info()));
+    }
+    ui->productsTable->resizeRowsToContents();
+}
+
+void MainWindow::on_racksTable_doubleClicked(const QModelIndex&)
 {
 
 }
 
-void MainWindow::on_productsTable_doubleClicked(const QModelIndex &index)
+void MainWindow::on_productsTable_doubleClicked(const QModelIndex&)
 {
 
 }
 
-void MainWindow::on_tasksTable_doubleClicked(const QModelIndex &index)
+void MainWindow::on_tasksTable_doubleClicked(const QModelIndex&)
+{
+
+}
+
+void MainWindow::on_lookupFlowBtn_clicked()
 {
 
 }

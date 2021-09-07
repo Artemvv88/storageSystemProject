@@ -65,7 +65,6 @@ void NewProductDialog::accept()
         } else {
             newProduct->_id = 0;
         }
-        parentRack->products().append(newProduct);
     }
 
     QDialog::accept();

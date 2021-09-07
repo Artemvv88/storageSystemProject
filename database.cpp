@@ -72,7 +72,7 @@ void Database::readDB()
                     in >> flowAmount;
                     product->_flow.append(flowAmount);
                 }
-                rack->products().append(product);
+                rack->_products.append(product);
             }
             _racks.append(rack);
         }
