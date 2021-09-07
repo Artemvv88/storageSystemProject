@@ -20,6 +20,13 @@ private slots:
     void test_modify_task();
     void test_remove_task();
 
+    void test_add_rack();
+    void test_modify_rack();
+    void test_add_product();
+    void test_modify_product();
+    void test_remove_product();
+    void test_remove_rack();
+
 };
 
 Test::Test()
@@ -77,7 +84,59 @@ void Test::test_remove_task()
 {
     auto taskId = Database::instance()->tasks().last()->id();
     Database::instance()->removeTaskById(taskId);
-    Q_ASSERT(Database::instance()->tasks().last()->id() != taskId);
+    Q_ASSERT(Database::instance()->racks().last()->id() != taskId);
+}
+
+void Test::test_add_rack()
+{
+    auto rack = new Rack();
+    rack->setCapacity(200);
+    rack->setStoragePosition(1);
+    Database::instance()->saveRack(rack);
+    Q_ASSERT(Database::instance()->racks().last()->id() != rack->id());
+}
+
+void Test::test_modify_rack()
+{
+    auto rackId = Database::instance()->racks().last()->id();
+    Database::instance()->getRackById(rackId)->setStoragePosition(12);
+    Q_ASSERT(Database::instance()->getRackById(rackId)->storagePosition() == 12);
+}
+
+void Test::test_add_product()
+{
+    auto rackId = Database::instance()->racks().last()->id();
+    auto product = new Product();
+    product->setInfo("test");
+    product->setSize(12);
+    product->setTitle("test");
+    Database::instance()->getRackById(rackId)->addProduct(product);
+    Q_ASSERT(Database::instance()->getRackById(rackId)->products().last()->id() == product->id());
+}
+
+void Test::test_modify_product()
+{
+    auto rackId = Database::instance()->racks().last()->id();
+    auto productId = Database::instance()->getRackById(rackId)->products().last()->id();
+    Database::instance()->getRackById(rackId)->getProductById(productId)->setTitle("newTitle");
+    Q_ASSERT(Database::instance()->getRackById(rackId)->getProductById(productId)->title() == "newTitle");
+}
+
+void Test::test_remove_product()
+{
+    auto rackId = Database::instance()->racks().last()->id();
+    auto productId = Database::instance()->getRackById(rackId)->products().last()->id();
+    int oldSize = Database::instance()->getRackById(rackId)->products().length();
+    Database::instance()->getRackById(rackId)->removeProductById(productId);
+    Q_ASSERT(Database::instance()->getRackById(rackId)->products().length() < oldSize);
+}
+
+void Test::test_remove_rack()
+{
+    auto rackId = Database::instance()->racks().last()->id();
+    int oldSize = Database::instance()->racks().length();
+    Database::instance()->removeRackById(rackId);
+    Q_ASSERT(Database::instance()->racks().length() < oldSize);
 }
 
 QTEST_APPLESS_MAIN(Test)
