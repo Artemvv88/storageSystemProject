@@ -14,6 +14,7 @@ SOURCES += \
     loginwindow.cpp \
     product.cpp \
     rack.cpp \
+    registrationwindow.cpp \
     systemuser.cpp \
     task.cpp
 
@@ -22,11 +23,13 @@ HEADERS += \
     loginwindow.h \
     product.h \
     rack.h \
+    registrationwindow.h \
     systemuser.h \
     task.h
 
 FORMS += \
-    loginwindow.ui
+    loginwindow.ui \
+    registrationwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
