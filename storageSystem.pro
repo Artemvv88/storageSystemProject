@@ -13,6 +13,9 @@ SOURCES += \
     main.cpp \
     loginwindow.cpp \
     mainwindow.cpp \
+    newproductdialog.cpp \
+    newrackdialog.cpp \
+    newtaskdialog.cpp \
     product.cpp \
     rack.cpp \
     registrationwindow.cpp \
@@ -23,6 +26,9 @@ HEADERS += \
     database.h \
     loginwindow.h \
     mainwindow.h \
+    newproductdialog.h \
+    newrackdialog.h \
+    newtaskdialog.h \
     product.h \
     rack.h \
     registrationwindow.h \
@@ -32,6 +38,9 @@ HEADERS += \
 FORMS += \
     loginwindow.ui \
     mainwindow.ui \
+    newproductdialog.ui \
+    newrackdialog.ui \
+    newtaskdialog.ui \
     registrationwindow.ui
 
 # Default rules for deployment.
