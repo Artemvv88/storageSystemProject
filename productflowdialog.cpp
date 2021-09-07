@@ -35,6 +35,7 @@ void ProductFlowDialog::on_addBtn_clicked()
     }
 
     product->addFlowItem(ui->amountSpinner->value());
+    ui->amountSpinner->setValue(0);
 
     drawList();
 }

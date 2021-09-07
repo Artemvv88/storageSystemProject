@@ -264,25 +264,27 @@ void MainWindow::on_productsTable_doubleClicked(const QModelIndex&)
     if (_user->userType() == SystemUserType::WORKER) return;
 
     Rack *rack = nullptr;
-    {
-        auto item = ui->racksTable->selectionModel()->selectedRows()[0];
-        RackID rid = item.data(Qt::DisplayRole).toUInt();
+    Product *product = nullptr;
+    try {
+        auto item1 = ui->racksTable->selectionModel()->selectedRows()[0];
+        RackID rid = item1.data(Qt::DisplayRole).toUInt();
         rack = Database::instance()->getRackById(rid);
         if (rack == nullptr) {
-            QMessageBox::critical(this, "Ошибка", "Выбран несуществующий стеллаж! Обратитесь к администратору.");
-            return;
+            throw std::runtime_error("Выбран несуществующий стеллаж! Обратитесь к администратору.");
         }
-    }
 
-    Product *product = nullptr;
-    {
-        auto item = ui->productsTable->selectionModel()->selectedRows()[0];
-        ProductID pid = item.data(Qt::DisplayRole).toUInt();
+        if (ui->productsTable->selectionModel()->selectedRows().length() != 1) {
+            throw std::runtime_error("Выберите один продукт.");
+        }
+        auto item2 = ui->productsTable->selectionModel()->selectedRows()[0];
+        ProductID pid = item2.data(Qt::DisplayRole).toUInt();
         product = rack->getProductById(pid);
         if (product == nullptr) {
-            QMessageBox::critical(this, "Ошибка", "Выбран несуществующий продукт! Обратитесь к администратору.");
-            return;
+            throw std::runtime_error("Выбран несуществующий продукт! Обратитесь к администратору.");
         }
+    } catch (const std::runtime_error &e) {
+        QMessageBox::critical(this, "Ошибка", e.what());
+        return;
     }
 
     NewProductDialog d(this);
@@ -319,25 +321,27 @@ void MainWindow::on_tasksTable_doubleClicked(const QModelIndex&)
 void MainWindow::on_lookupFlowBtn_clicked()
 {
     Rack *rack = nullptr;
-    {
-        auto item = ui->racksTable->selectionModel()->selectedRows()[0];
-        RackID rid = item.data(Qt::DisplayRole).toUInt();
+    Product *product = nullptr;
+    try {
+        auto item1 = ui->racksTable->selectionModel()->selectedRows()[0];
+        RackID rid = item1.data(Qt::DisplayRole).toUInt();
         rack = Database::instance()->getRackById(rid);
         if (rack == nullptr) {
-            QMessageBox::critical(this, "Ошибка", "Выбран несуществующий стеллаж! Обратитесь к администратору.");
-            return;
+            throw std::runtime_error("Выбран несуществующий стеллаж! Обратитесь к администратору.");
         }
-    }
 
-    Product *product = nullptr;
-    {
-        auto item = ui->productsTable->selectionModel()->selectedRows()[0];
-        ProductID pid = item.data(Qt::DisplayRole).toUInt();
+        if (ui->productsTable->selectionModel()->selectedRows().length() != 1) {
+            throw std::runtime_error("Выберите один продукт.");
+        }
+        auto item2 = ui->productsTable->selectionModel()->selectedRows()[0];
+        ProductID pid = item2.data(Qt::DisplayRole).toUInt();
         product = rack->getProductById(pid);
         if (product == nullptr) {
-            QMessageBox::critical(this, "Ошибка", "Выбран несуществующий продукт! Обратитесь к администратору.");
-            return;
+            throw std::runtime_error("Выбран несуществующий продукт! Обратитесь к администратору.");
         }
+    } catch (const std::runtime_error &e) {
+        QMessageBox::critical(this, "Ошибка", e.what());
+        return;
     }
 
     ProductFlowDialog d(this);
