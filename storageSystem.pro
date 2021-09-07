@@ -12,11 +12,13 @@ SOURCES += \
     main.cpp \
     loginwindow.cpp \
     product.cpp \
+    rack.cpp \
     systemuser.cpp
 
 HEADERS += \
     loginwindow.h \
     product.h \
+    rack.h \
     systemuser.h
 
 FORMS += \
