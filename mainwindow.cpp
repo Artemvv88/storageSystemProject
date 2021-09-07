@@ -318,10 +318,31 @@ void MainWindow::on_tasksTable_doubleClicked(const QModelIndex&)
 
 void MainWindow::on_lookupFlowBtn_clicked()
 {
+    Rack *rack = nullptr;
+    {
+        auto item = ui->racksTable->selectionModel()->selectedRows()[0];
+        RackID rid = item.data(Qt::DisplayRole).toUInt();
+        rack = Database::instance()->getRackById(rid);
+        if (rack == nullptr) {
+            QMessageBox::critical(this, "Ошибка", "Выбран несуществующий стеллаж! Обратитесь к администратору.");
+            return;
+        }
+    }
 
-}
+    Product *product = nullptr;
+    {
+        auto item = ui->productsTable->selectionModel()->selectedRows()[0];
+        ProductID pid = item.data(Qt::DisplayRole).toUInt();
+        product = rack->getProductById(pid);
+        if (product == nullptr) {
+            QMessageBox::critical(this, "Ошибка", "Выбран несуществующий продукт! Обратитесь к администратору.");
+            return;
+        }
+    }
 
-void MainWindow::on_addFlowBtn_clicked()
-{
+    ProductFlowDialog d(this);
+    d.setProduct(product);
+    d.exec();
 
+    on_racksTable_clicked(QModelIndex());
 }

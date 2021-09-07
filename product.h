@@ -4,9 +4,12 @@
 #include <QtGlobal>
 #include <QString>
 #include <QVector>
+#include <QPair>
+#include <QDate>
 
 
 typedef quint32 ProductID;
+typedef QPair<QDate, int> FlowItem;
 
 class Product
 {
@@ -14,7 +17,7 @@ private:
     ProductID _id;
     QString _title;
     QString _info;
-    QVector<int> _flow;
+    QVector<FlowItem> _flow;
     quint32 _size = 0;
 
 public:
@@ -25,8 +28,9 @@ public:
     void setTitle(const QString &title);
     QString info() const;
     void setInfo(const QString &info);
-    QVector<int> flow() const;
+    QVector<FlowItem> flow() const;
     void addFlowItem(int flowAmount);
+    void removeFlowItemAt(int index);
     quint32 size() const;
     void setSize(const quint32 &size);
 

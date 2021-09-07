@@ -217,13 +217,6 @@
                </property>
               </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="addFlowBtn">
-               <property name="text">
-                <string>Добавить приход/уход товара</string>
-               </property>
-              </widget>
-             </item>
             </layout>
            </item>
           </layout>

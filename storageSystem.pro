@@ -17,6 +17,7 @@ SOURCES += \
     newrackdialog.cpp \
     newtaskdialog.cpp \
     product.cpp \
+    productflowdialog.cpp \
     rack.cpp \
     registrationwindow.cpp \
     systemuser.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     newrackdialog.h \
     newtaskdialog.h \
     product.h \
+    productflowdialog.h \
     rack.h \
     registrationwindow.h \
     systemuser.h \
@@ -41,6 +43,7 @@ FORMS += \
     newproductdialog.ui \
     newrackdialog.ui \
     newtaskdialog.ui \
+    productflowdialog.ui \
     registrationwindow.ui
 
 # Default rules for deployment.

@@ -30,14 +30,21 @@ void Product::setInfo(const QString &info)
     _info = info;
 }
 
-QVector<int> Product::flow() const
+QVector<FlowItem> Product::flow() const
 {
     return _flow;
 }
 
 void Product::addFlowItem(int flowAmount)
 {
-    _flow.append(flowAmount);
+    _flow.append(FlowItem(QDate::currentDate(), flowAmount));
+}
+
+void Product::removeFlowItemAt(int index)
+{
+    if (index >= 0 && index < _flow.length()){
+        _flow.removeAt(index);
+    }
 }
 
 quint32 Product::size() const
