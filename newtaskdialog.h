@@ -27,7 +27,7 @@ public:
     ~NewTaskDialog();
 
     Task *getTask();
-    void setTask(Task *task, bool isTaskNew=true);
+    void setTask(Task *task, bool isTaskNew=true, bool isStoragekeeper=false);
 
 public slots:
     void accept();

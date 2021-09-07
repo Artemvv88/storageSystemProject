@@ -188,7 +188,7 @@ void MainWindow::on_addTask_clicked()
 {
     auto t = new Task();
     NewTaskDialog d(this);
-    d.setTask(t, true);
+    d.setTask(t, true, _user->userType() == SystemUserType::STOREKEEPER);
     if (d.exec() != QDialog::Accepted) {
         delete t;
         return;
@@ -310,7 +310,7 @@ void MainWindow::on_tasksTable_doubleClicked(const QModelIndex&)
     }
 
     NewTaskDialog d(this);
-    d.setTask(task, false);
+    d.setTask(task, false, _user->userType() == SystemUserType::STOREKEEPER);
     if (d.exec() == QDialog::Accepted) {
         emit needUiUpdate();
     }

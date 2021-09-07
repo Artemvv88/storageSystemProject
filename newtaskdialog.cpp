@@ -18,7 +18,7 @@ Task *NewTaskDialog::getTask()
     return newTask;
 }
 
-void NewTaskDialog::setTask(Task *task, bool isTaskNew)
+void NewTaskDialog::setTask(Task *task, bool isTaskNew, bool isStoragekeeper)
 {
     newTask = task;
     isNew = isTaskNew;
@@ -28,6 +28,10 @@ void NewTaskDialog::setTask(Task *task, bool isTaskNew)
         ui->idLabel->setText(QString::number(task->id()));
         ui->descriptionInput->setPlainText(task->description());
         ui->userGroupDropdown->setCurrentIndex((int)task->executorGroup() - 1);
+    }
+    if (isStoragekeeper) {
+        ui->userGroupDropdown->setCurrentIndex(1);
+        ui->userGroupDropdown->setEnabled(false);
     }
 }
 
@@ -45,7 +49,7 @@ void NewTaskDialog::accept()
     }
 
     newTask->setDescription(ui->descriptionInput->toPlainText());
-    newTask->setExecutorGroup((SystemUserType)ui->userGroupDropdown->currentIndex());
+    newTask->setExecutorGroup((SystemUserType)(ui->userGroupDropdown->currentIndex() + 1));
 
     if (isNew) {
         if (Database::instance()->tasks().length() > 0) {
