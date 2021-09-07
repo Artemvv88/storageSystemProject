@@ -64,6 +64,7 @@ void Database::readDB()
                 in >> product->_id;
                 in >> product->_title;
                 in >> product->_info;
+                in >> product->_size;
                 quint32 flowCount = 0;
                 in >> flowCount;
                 for (quint32 k = 0; k < flowCount; k++) {
@@ -127,6 +128,7 @@ void Database::writeDB()
                 out << product->id();
                 out << product->title();
                 out << product->info();
+                out << product->size();
                 out << product->flow().length();
                 for (auto flowAmount : product->flow()) {
                     out << flowAmount;
@@ -201,10 +203,57 @@ SystemUser *Database::registerUser(const QString &login, const QString &password
     }
 
     auto user = new SystemUser();
-    user->_id = _users.length();
+    if (_users.length() > 0) {
+        user->_id = _users.last()->id() + 1;
+    } else {
+        user->_id = 0;
+    }
     user->_login = login;
     user->_passwordHash = QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex());
     user->_userType = userType;
     _users.append(user);
     return user;
+}
+
+bool Database::spaceOccupied(quint32 position)
+{
+    for (auto r : _racks) {
+        if (r->storagePosition() == position) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void Database::saveRack(Rack *newRack)
+{
+    _racks.append(newRack);
+}
+
+Rack *Database::getRackById(RackID rackId)
+{
+    for (auto rack : _racks) {
+        if (rack->id() == rackId) {
+            return rack;
+        }
+    }
+
+    return nullptr;
+}
+
+void Database::saveTask(Task *newTask)
+{
+    _tasks.append(newTask);
+}
+
+Task *Database::getTaskById(TaskID taskId)
+{
+    for (auto task : _tasks) {
+        if (task->id() == taskId) {
+            return task;
+        }
+    }
+
+    return nullptr;
 }

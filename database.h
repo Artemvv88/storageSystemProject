@@ -43,6 +43,13 @@ public:
     SystemUser* getUserByLogin(const QString &login);
     SystemUser* getUserByLoginAndPassword(const QString &login, const QString &password);
     SystemUser* registerUser(const QString &login, const QString &password, SystemUserType userType);
+
+    bool spaceOccupied(quint32 position);
+    void saveRack(Rack *newRack);
+    Rack* getRackById(RackID rackId);
+
+    void saveTask(Task *newTask);
+    Task* getTaskById(TaskID taskId);
 };
 
 #endif // DATABASE_H
