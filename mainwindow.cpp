@@ -99,7 +99,15 @@ void MainWindow::on_markCompletedButton_clicked()
 
 void MainWindow::on_addTask_clicked()
 {
+    auto t = new Task();
+    NewTaskDialog d(this);
+    d.setTask(t, true);
+    if (d.exec() != QDialog::Accepted) {
+        delete t;
+        return;
+    }
 
+    emit needUiUpdate();
 }
 
 void MainWindow::on_usersTable_doubleClicked(const QModelIndex &index)
