@@ -161,7 +161,7 @@ void MainWindow::on_addProductBtn_clicked()
     }
     rack->addProduct(p);
 
-    emit needUiUpdate();
+    on_racksTable_clicked(QModelIndex());
 }
 
 void MainWindow::on_markCompletedButton_clicked()
@@ -235,18 +235,57 @@ void MainWindow::on_racksTable_clicked(const QModelIndex&)
         ui->productsTable->setItem(rowid, 0, new QTableWidgetItem(QString::number(product->id())));
         ui->productsTable->setItem(rowid, 1, new QTableWidgetItem(product->title()));
         ui->productsTable->setItem(rowid, 2, new QTableWidgetItem(product->info()));
+        ui->productsTable->setItem(rowid, 3, new QTableWidgetItem(product->size()));
     }
     ui->productsTable->resizeRowsToContents();
 }
 
 void MainWindow::on_racksTable_doubleClicked(const QModelIndex&)
 {
+    auto item = ui->racksTable->selectionModel()->selectedRows()[0];
+    RackID rid = item.data(Qt::DisplayRole).toUInt();
+    auto rack = Database::instance()->getRackById(rid);
+    if (rack == nullptr) {
+        QMessageBox::critical(this, "Ошибка", "Выбран несуществующий стеллаж! Обратитесь к администратору.");
+        return;
+    }
 
+    NewRackDialog d(this);
+    d.setRack(rack, false);
+    d.exec();
+
+    emit needUiUpdate();
 }
 
 void MainWindow::on_productsTable_doubleClicked(const QModelIndex&)
 {
+    Rack *rack = nullptr;
+    {
+        auto item = ui->racksTable->selectionModel()->selectedRows()[0];
+        RackID rid = item.data(Qt::DisplayRole).toUInt();
+        rack = Database::instance()->getRackById(rid);
+        if (rack == nullptr) {
+            QMessageBox::critical(this, "Ошибка", "Выбран несуществующий стеллаж! Обратитесь к администратору.");
+            return;
+        }
+    }
 
+    Product *product = nullptr;
+    {
+        auto item = ui->productsTable->selectionModel()->selectedRows()[0];
+        ProductID pid = item.data(Qt::DisplayRole).toUInt();
+        product = rack->getProductById(pid);
+        if (product == nullptr) {
+            QMessageBox::critical(this, "Ошибка", "Выбран несуществующий продукт! Обратитесь к администратору.");
+            return;
+        }
+    }
+
+    NewProductDialog d(this);
+    d.setProduct(product, rack, false);
+    d.exec();
+
+    on_racksTable_clicked(QModelIndex());
 }
 
 void MainWindow::on_tasksTable_doubleClicked(const QModelIndex&)
