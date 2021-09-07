@@ -40,6 +40,11 @@ void MainWindow::on_addProductBtn_clicked()
 
 }
 
+void MainWindow::on_markCompletedButton_clicked()
+{
+
+}
+
 void MainWindow::on_addTask_clicked()
 {
 

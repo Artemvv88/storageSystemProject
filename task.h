@@ -30,6 +30,7 @@ public:
     void setDone(bool done);
 
     friend class Database;
+    friend class NewTaskDialog;
 };
 
 #endif // TASK_H

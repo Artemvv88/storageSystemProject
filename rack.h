@@ -13,7 +13,7 @@ typedef quint32 RackID;
 class Rack
 {
 private:
-    RackID _id;
+    RackID _id = -1;
     quint32 _storagePosition;
     quint32 _capacity;
     QVector<Product*> _products;
@@ -29,6 +29,7 @@ public:
     QVector<Product *> products() const;
 
     friend class Database;
+    friend class NewRackDialog;
 };
 
 #endif // RACK_H

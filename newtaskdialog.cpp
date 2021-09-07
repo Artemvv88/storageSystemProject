@@ -12,3 +12,49 @@ NewTaskDialog::~NewTaskDialog()
 {
     delete ui;
 }
+
+Task *NewTaskDialog::getTask()
+{
+    return newTask;
+}
+
+void NewTaskDialog::setTask(Task *task, bool isTaskNew)
+{
+    newTask = task;
+    isNew = isTaskNew;
+    if (isNew) {
+        ui->idLabel->setText("Будет присвоен после сохранения");
+    } else {
+        ui->idLabel->setText(QString::number(task->id()));
+        ui->descriptionInput->setPlainText(task->description());
+        ui->userGroupDropdown->setCurrentIndex((int)task->executorGroup() - 1);
+    }
+}
+
+void NewTaskDialog::accept()
+{
+    QString errorMessage;
+
+    if (ui->descriptionInput->toPlainText().isEmpty()) {
+        errorMessage += "Описание задачи не может быть пустым. \n";
+    }
+    errorMessage = errorMessage.trimmed();
+    if (!errorMessage.isEmpty()) {
+        QMessageBox::critical(this, "Ошибка", errorMessage);
+        return;
+    }
+
+    newTask->setDescription(ui->descriptionInput->toPlainText());
+    newTask->setExecutorGroup((SystemUserType)ui->userGroupDropdown->currentIndex());
+
+    if (isNew) {
+        if (Database::instance()->tasks().length() > 0) {
+            newTask->_id = Database::instance()->tasks().last()->id() + 1;
+        } else {
+            newTask->_id = 0;
+        }
+        Database::instance()->saveTask(newTask);
+    }
+
+    QDialog::accept();
+}

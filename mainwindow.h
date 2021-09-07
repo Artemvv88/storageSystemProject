@@ -29,10 +29,12 @@ public:
     ~MainWindow();
 
     void setUser(SystemUser *user);
+
 private slots:
     void on_addUserBtn_clicked();
     void on_addRackBtn_clicked();
     void on_addProductBtn_clicked();
+    void on_markCompletedButton_clicked();
     void on_addTask_clicked();
     void on_usersTable_doubleClicked(const QModelIndex &index);
     void on_racksTable_doubleClicked(const QModelIndex &index);

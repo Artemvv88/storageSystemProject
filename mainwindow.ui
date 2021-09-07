@@ -226,11 +226,22 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="addTask">
-             <property name="text">
-              <string>Добавить задачу</string>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QPushButton" name="markCompletedButton">
+               <property name="text">
+                <string>Отметить выполненной</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="addTask">
+               <property name="text">
+                <string>Добавить задачу</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
           </layout>
          </widget>

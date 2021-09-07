@@ -39,3 +39,13 @@ void Product::addFlowItem(int flowAmount)
 {
     _flow.append(flowAmount);
 }
+
+quint32 Product::size() const
+{
+    return _size;
+}
+
+void Product::setSize(const quint32 &size)
+{
+    _size = size;
+}
