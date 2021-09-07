@@ -45,7 +45,7 @@ void RegistrationWindow::on_registerBtn_clicked()
     }
 
     if (user == nullptr) {
-        if (user == nullptr && qobject_cast<MainWindow*>(parent()) == nullptr && ui->accountTypeDropdown->currentIndex() == 0) {
+        if (qobject_cast<MainWindow*>(parent()) == nullptr && ui->accountTypeDropdown->currentIndex() == 0 && Database::instance()->users().length() > 0) {
             QMessageBox::critical(this, "Ошибка", "Только администратор может создавать других администраторов");
             return;
         }

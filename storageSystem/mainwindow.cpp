@@ -293,7 +293,7 @@ void MainWindow::on_productsTable_doubleClicked(const QModelIndex&)
     NewProductDialog d(this);
     d.setProduct(product, rack, false);
     if (d.exec() == QDialog::Accepted) {
-        on_racksTable_clicked(QModelIndex());
+        emit needUiUpdate();
     }
 }
 

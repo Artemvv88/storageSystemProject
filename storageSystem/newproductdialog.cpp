@@ -28,6 +28,7 @@ void NewProductDialog::setProduct(Product *product, Rack* parentRack, bool isPro
     } else {
         ui->idLabel->setText(QString::number(product->id()));
         ui->titleInput->setText(product->title());
+        ui->sizeSpinner->setValue(product->size());
         ui->descriptionInput->setPlainText(product->info());
     }
 }
