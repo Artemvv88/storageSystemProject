@@ -34,9 +34,8 @@ void MainWindow::updateUi()
 
 void MainWindow::on_addUserBtn_clicked()
 {
-    auto w = new RegistrationWindow(this);
-    w->show();
-    delete w;
+    RegistrationWindow w(this);
+    w.exec();
 
     emit needUiUpdate();
 }
@@ -115,7 +114,22 @@ void MainWindow::on_addTask_clicked()
 
 void MainWindow::on_usersTable_doubleClicked(const QModelIndex &index)
 {
+    UserID uid = index.siblingAtRow(0).data().toUInt();
+    auto user = Database::instance()->getUserById(uid);
+    if (user == nullptr) {
+        QMessageBox::critical(this, "Ошибка", "Выбран несуществующий пользовватель! Обратитесь к администратору.");
+        return;
+    }
+    if (user->id() == _user->id()) {
+        QMessageBox::critical(this, "Ошибка", "Нельзя редактировать собственный аккаунт!");
+        return;
+    }
 
+    RegistrationWindow w(this);
+    w.setUser(user);
+    w.exec();
+
+    emit needUiUpdate();
 }
 
 void MainWindow::on_racksTable_doubleClicked(const QModelIndex &index)

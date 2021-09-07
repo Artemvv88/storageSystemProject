@@ -18,6 +18,14 @@ RegistrationWindow::~RegistrationWindow()
     delete ui;
 }
 
+void RegistrationWindow::setUser(SystemUser *user)
+{
+    this->user = user;
+    ui->titleLabel->setText("Редактирование пользователя");
+    ui->registerBtn->setText("Сохранить");
+    ui->loginInput->setDisabled(true);
+}
+
 void RegistrationWindow::closeEvent(QCloseEvent *event)
 {
     if (qobject_cast<MainWindow*>(parent()) == nullptr) {
@@ -34,15 +42,20 @@ void RegistrationWindow::on_registerBtn_clicked()
         return;
     }
 
-    auto user = Database::instance()->registerUser(
-                    ui->loginInput->text(),
-                    ui->passwordInput->text(),
-                    (SystemUserType) ui->accountTypeDropdown->currentIndex()
-                );
-
     if (user == nullptr) {
-        QMessageBox::critical(this, "Ошибка", "Пользователь с таким логином уже существует");
-        return;
+        auto _user = Database::instance()->registerUser(
+                        ui->loginInput->text(),
+                        ui->passwordInput->text(),
+                        (SystemUserType) ui->accountTypeDropdown->currentIndex()
+                    );
+
+        if (_user == nullptr) {
+            QMessageBox::critical(this, "Ошибка", "Пользователь с таким логином уже существует");
+            return;
+        }
+    } else {
+        user->_passwordHash = QString(QCryptographicHash::hash(ui->passwordInput->text().toUtf8(), QCryptographicHash::Sha256).toHex());
+        user->setUserType((SystemUserType) ui->accountTypeDropdown->currentIndex());
     }
 
     close();

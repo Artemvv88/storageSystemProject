@@ -22,11 +22,15 @@ class RegistrationWindow : public QDialog
 private:
     Ui::RegistrationWindow *ui;
 
+    SystemUser *user = nullptr;
+
     void closeEvent(QCloseEvent *event);
 
 public:
     explicit RegistrationWindow(QWidget *parent = nullptr);
     ~RegistrationWindow();
+
+    void setUser(SystemUser *user);
 
 private slots:
     void on_registerBtn_clicked();

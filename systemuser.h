@@ -30,6 +30,7 @@ public:
     void setUserType(const SystemUserType &userType);
 
     friend class Database;
+    friend class RegistrationWindow;
 };
 
 #endif // SYSTEMUSER_H

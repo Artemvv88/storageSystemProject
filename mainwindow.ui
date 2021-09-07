@@ -55,7 +55,7 @@
     <item>
      <widget class="QTabWidget" name="usersTab">
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -69,14 +69,7 @@
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_2">
            <item>
-            <widget class="QTableView" name="usersTable">
-             <property name="selectionMode">
-              <enum>QAbstractItemView::SingleSelection</enum>
-             </property>
-             <property name="selectionBehavior">
-              <enum>QAbstractItemView::SelectRows</enum>
-             </property>
-            </widget>
+            <widget class="QTableWidget" name="usersTable"/>
            </item>
           </layout>
          </widget>
