@@ -11,10 +11,12 @@ CONFIG += c++11
 SOURCES += \
     main.cpp \
     loginwindow.cpp \
+    product.cpp \
     systemuser.cpp
 
 HEADERS += \
     loginwindow.h \
+    product.h \
     systemuser.h
 
 FORMS += \
