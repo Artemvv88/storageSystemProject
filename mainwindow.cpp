@@ -43,8 +43,11 @@ void MainWindow::on_addUserBtn_clicked()
 
 void MainWindow::on_addRackBtn_clicked()
 {
+    auto r = new Rack();
     NewRackDialog d(this);
+    d.setRack(r, true);
     if (d.exec() != QDialog::Accepted) {
+        delete r;
         return;
     }
 
