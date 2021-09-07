@@ -53,11 +53,11 @@
      </layout>
     </item>
     <item>
-     <widget class="QTabWidget" name="usersTab">
+     <widget class="QTabWidget" name="tabHost">
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
-      <widget class="QWidget" name="tab">
+      <widget class="QWidget" name="usersTab">
        <attribute name="title">
         <string>Пользователи</string>
        </attribute>
@@ -83,7 +83,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_2">
+      <widget class="QWidget" name="racksTab">
        <attribute name="title">
         <string>Стеллажи</string>
        </attribute>
@@ -177,7 +177,7 @@
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="tab_3">
+      <widget class="QWidget" name="tasksTab">
        <attribute name="title">
         <string>Задачи</string>
        </attribute>

@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->tabHost->setCurrentIndex(0);
 
     connect(this, &MainWindow::needUiUpdate, this, &MainWindow::updateUi);
 }
@@ -25,6 +26,16 @@ void MainWindow::closeEvent(QCloseEvent *event)
 void MainWindow::setUser(SystemUser *user)
 {
     _user = user;
+    ui->userName->setText(_user->login());
+    if (_user->userType() != SystemUserType::ADMINISTRATOR) {
+        ui->tabHost->removeTab(0); // Users tab
+        ui->addRackBtn->hide();
+        if (_user->userType() != SystemUserType::STOREKEEPER) {
+            ui->addProductBtn->hide();
+            ui->addTask->hide();
+            ui->markCompletedButton->hide();
+        }
+    }
 }
 
 void MainWindow::updateUi()
