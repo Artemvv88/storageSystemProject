@@ -5,6 +5,8 @@
 #include <QString>
 #include <QVector>
 
+#include "product.h"
+
 
 typedef quint32 RackID;
 
@@ -14,6 +16,7 @@ private:
     RackID _id;
     quint32 _storagePosition;
     quint32 _capacity;
+    QVector<Product*> _products;
 
 public:
     Rack();
@@ -23,6 +26,9 @@ public:
     void setStoragePosition(const quint32 &storagePosition);
     quint32 capacity() const;
     void setCapacity(const quint32 &capacity);
+    QVector<Product *> products() const;
+
+    friend class Database;
 };
 
 #endif // RACK_H

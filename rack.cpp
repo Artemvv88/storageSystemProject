@@ -1,8 +1,13 @@
 #include "rack.h"
 
+QVector<Product *> Rack::products() const
+{
+    return _products;
+}
+
 Rack::Rack()
 {
-
+    
 }
 
 RackID Rack::id() const

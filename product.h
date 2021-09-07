@@ -26,6 +26,8 @@ public:
     void setInfo(const QString &info);
     QVector<int> flow() const;
     void addFlowItem(int flowAmount);
+
+    friend class Database;
 };
 
 #endif // PRODUCT_H

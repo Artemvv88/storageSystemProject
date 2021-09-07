@@ -28,6 +28,8 @@ public:
     QString passwordHash() const;
     SystemUserType userType() const;
     void setUserType(const SystemUserType &userType);
+
+    friend class Database;
 };
 
 #endif // SYSTEMUSER_H

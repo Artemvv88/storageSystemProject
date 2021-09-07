@@ -25,6 +25,8 @@ public:
     void setDescription(const QString &description);
     SystemUserType executorGroup() const;
     void setExecutorGroup(const SystemUserType &executorGroup);
+
+    friend class Database;
 };
 
 #endif // TASK_H
