@@ -1,6 +1,7 @@
 #ifndef REGISTRATIONWINDOW_H
 #define REGISTRATIONWINDOW_H
 
+#include <QDialog>
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QCloseEvent>
@@ -14,7 +15,7 @@ namespace Ui {
 class RegistrationWindow;
 }
 
-class RegistrationWindow : public QMainWindow
+class RegistrationWindow : public QDialog
 {
     Q_OBJECT
 

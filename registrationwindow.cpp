@@ -2,7 +2,7 @@
 #include "ui_registrationwindow.h"
 
 RegistrationWindow::RegistrationWindow(QWidget *parent) :
-    QMainWindow(parent),
+    QDialog(parent),
     ui(new Ui::RegistrationWindow)
 {
     ui->setupUi(this);
