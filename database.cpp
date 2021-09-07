@@ -39,6 +39,7 @@ void Database::readDB()
             in >> task->_id;
             in >> task->_description;
             in >> task->_executorGroup;
+            in >> task->_done;
             _tasks.append(task);
         }
 
@@ -106,6 +107,7 @@ void Database::writeDB()
             out << task->id();
             out << task->description();
             out << task->executorGroup();
+            out << task->done();
         }
 
         file.close();
