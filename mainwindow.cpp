@@ -55,19 +55,22 @@ void MainWindow::on_addProductBtn_clicked()
 {
     auto selectedRows = ui->racksTable->selectionModel()->selectedRows();
     if (selectedRows.length() != 1) {
+        QMessageBox::information(this, "Информация", "Не выбран стеллаж из списка!");
         return;
     }
 
     RackID rid = selectedRows[0].data().toUInt();
     auto rack = Database::instance()->getRackById(rid);
     if (rack == nullptr) {
-        QMessageBox::information(this, "Информация", "С начала нужно выбрать стеллаж в списке");
+        QMessageBox::critical(this, "Ошибка", "Выбран несуществующий стеллаж! Обратитесь к администратору.");
         return;
     }
 
+    auto p = new Product();
     NewProductDialog d(this);
-    d.setProduct(new Product(), rack, true);
+    d.setProduct(p, rack, true);
     if (d.exec() != QDialog::Accepted) {
+        delete p;
         return;
     }
 
@@ -76,7 +79,22 @@ void MainWindow::on_addProductBtn_clicked()
 
 void MainWindow::on_markCompletedButton_clicked()
 {
+    auto selectedRows = ui->tasksTable->selectionModel()->selectedRows();
+    if (selectedRows.length() != 1) {
+        QMessageBox::information(this, "Информация", "Не выбрана задача из списка!");
+        return;
+    }
 
+    TaskID tid = selectedRows[0].data().toUInt();
+    auto task = Database::instance()->getTaskById(tid);
+    if (task == nullptr) {
+        QMessageBox::critical(this, "Ошибка", "Выбран несуществующий стеллаж! Обратитесь к администратору.");
+        return;
+    }
+
+    task->setDone(true);
+
+    emit needUiUpdate();
 }
 
 void MainWindow::on_addTask_clicked()

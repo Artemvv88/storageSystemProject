@@ -6,12 +6,15 @@
 #include <QCloseEvent>
 
 #include "database.h"
+#include "systemuser.h"
+#include "rack.h"
+#include "task.h"
+
 #include "loginwindow.h"
 #include "registrationwindow.h"
 #include "newrackdialog.h"
 #include "newproductdialog.h"
 #include "newtaskdialog.h"
-#include "systemuser.h"
 
 
 namespace Ui {
