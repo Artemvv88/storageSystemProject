@@ -7,6 +7,10 @@
 
 #include "database.h"
 #include "loginwindow.h"
+#include "registrationwindow.h"
+#include "newrackdialog.h"
+#include "newproductdialog.h"
+#include "newtaskdialog.h"
 #include "systemuser.h"
 
 
@@ -29,6 +33,12 @@ public:
     ~MainWindow();
 
     void setUser(SystemUser *user);
+
+signals:
+    void needUiUpdate();
+
+public slots:
+    void updateUi();
 
 private slots:
     void on_addUserBtn_clicked();

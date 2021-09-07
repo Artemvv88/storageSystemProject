@@ -20,8 +20,10 @@ RegistrationWindow::~RegistrationWindow()
 
 void RegistrationWindow::closeEvent(QCloseEvent *event)
 {
-    auto w = new LoginWindow();
-    w->show();
+    if (qobject_cast<MainWindow*>(parent()) == nullptr) {
+        auto w = new LoginWindow();
+        w->show();
+    }
     event->accept();
 }
 
