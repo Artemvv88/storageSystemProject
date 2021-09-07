@@ -83,8 +83,9 @@ void Test::test_modify_task()
 void Test::test_remove_task()
 {
     auto taskId = Database::instance()->tasks().last()->id();
+    int oldSize = Database::instance()->tasks().length();
     Database::instance()->removeTaskById(taskId);
-    Q_ASSERT(Database::instance()->racks().last()->id() != taskId);
+    Q_ASSERT(Database::instance()->tasks().length() < oldSize);
 }
 
 void Test::test_add_rack()
@@ -93,7 +94,7 @@ void Test::test_add_rack()
     rack->setCapacity(200);
     rack->setStoragePosition(1);
     Database::instance()->saveRack(rack);
-    Q_ASSERT(Database::instance()->racks().last()->id() != rack->id());
+    Q_ASSERT(Database::instance()->racks().last()->id() == rack->id());
 }
 
 void Test::test_modify_rack()
