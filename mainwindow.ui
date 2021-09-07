@@ -213,7 +213,14 @@
              <item>
               <widget class="QPushButton" name="lookupFlowBtn">
                <property name="text">
-                <string>Просмотреть приход товара</string>
+                <string>Просмотреть приход/уход товара</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="addFlowBtn">
+               <property name="text">
+                <string>Добавить приход/уход товара</string>
                </property>
               </widget>
              </item>

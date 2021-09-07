@@ -55,6 +55,7 @@ private slots:
     void on_productsTable_doubleClicked(const QModelIndex&);
     void on_tasksTable_doubleClicked(const QModelIndex&);
     void on_lookupFlowBtn_clicked();
+    void on_addFlowBtn_clicked();
 };
 
 #endif // MAINWINDOW_H

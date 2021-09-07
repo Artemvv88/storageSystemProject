@@ -254,9 +254,9 @@ void MainWindow::on_racksTable_doubleClicked(const QModelIndex&)
 
     NewRackDialog d(this);
     d.setRack(rack, false);
-    d.exec();
-
-    emit needUiUpdate();
+    if (d.exec() == QDialog::Accepted) {
+        emit needUiUpdate();
+    }
 }
 
 void MainWindow::on_productsTable_doubleClicked(const QModelIndex&)
@@ -287,19 +287,41 @@ void MainWindow::on_productsTable_doubleClicked(const QModelIndex&)
 
     NewProductDialog d(this);
     d.setProduct(product, rack, false);
-    d.exec();
-
-    on_racksTable_clicked(QModelIndex());
+    if (d.exec() == QDialog::Accepted) {
+        on_racksTable_clicked(QModelIndex());
+    }
 }
 
 void MainWindow::on_tasksTable_doubleClicked(const QModelIndex&)
 {
     if (_user->userType() == SystemUserType::WORKER) return;
 
+    auto item = ui->tasksTable->selectionModel()->selectedRows()[0];
+    TaskID rid = item.data(Qt::DisplayRole).toUInt();
+    auto task = Database::instance()->getTaskById(rid);
+    if (task == nullptr) {
+        QMessageBox::critical(this, "Ошибка", "Выбрана несуществующая задача! Обратитесь к администратору.");
+        return;
+    }
 
+    if (_user->userType() == task->executorGroup()) {
+        QMessageBox::critical(this, "Ошибка", "Нельзя редактировать задачу своей группы!");
+        return;
+    }
+
+    NewTaskDialog d(this);
+    d.setTask(task, false);
+    if (d.exec() == QDialog::Accepted) {
+        emit needUiUpdate();
+    }
 }
 
 void MainWindow::on_lookupFlowBtn_clicked()
+{
+
+}
+
+void MainWindow::on_addFlowBtn_clicked()
 {
 
 }
