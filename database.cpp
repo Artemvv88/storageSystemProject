@@ -181,6 +181,17 @@ SystemUser *Database::getUserByLogin(const QString &login)
     return nullptr;
 }
 
+SystemUser *Database::getUserByLoginAndPassword(const QString &login, const QString &password)
+{
+    auto passwordHash = QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex());
+    auto user = getUserByLogin(login);
+    if (user == nullptr || user->passwordHash() != passwordHash) {
+        user = nullptr;
+    }
+
+    return user;
+}
+
 SystemUser *Database::registerUser(const QString &login, const QString &password, SystemUserType userType)
 {
     if (getUserByLogin(login) != nullptr) {
@@ -192,5 +203,6 @@ SystemUser *Database::registerUser(const QString &login, const QString &password
     user->_login = login;
     user->_passwordHash = QString(QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex());
     user->_userType = userType;
+    _users.append(user);
     return user;
 }

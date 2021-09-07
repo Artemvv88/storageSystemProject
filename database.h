@@ -41,6 +41,7 @@ public:
 
     SystemUser* getUserById(UserID userId);
     SystemUser* getUserByLogin(const QString &login);
+    SystemUser* getUserByLoginAndPassword(const QString &login, const QString &password);
     SystemUser* registerUser(const QString &login, const QString &password, SystemUserType userType);
 };
 
