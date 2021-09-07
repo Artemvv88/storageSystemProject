@@ -242,6 +242,8 @@ void MainWindow::on_racksTable_clicked(const QModelIndex&)
 
 void MainWindow::on_racksTable_doubleClicked(const QModelIndex&)
 {
+    if (_user->userType() != SystemUserType::ADMINISTRATOR) return;
+
     auto item = ui->racksTable->selectionModel()->selectedRows()[0];
     RackID rid = item.data(Qt::DisplayRole).toUInt();
     auto rack = Database::instance()->getRackById(rid);
@@ -259,6 +261,8 @@ void MainWindow::on_racksTable_doubleClicked(const QModelIndex&)
 
 void MainWindow::on_productsTable_doubleClicked(const QModelIndex&)
 {
+    if (_user->userType() == SystemUserType::WORKER) return;
+
     Rack *rack = nullptr;
     {
         auto item = ui->racksTable->selectionModel()->selectedRows()[0];
@@ -290,6 +294,8 @@ void MainWindow::on_productsTable_doubleClicked(const QModelIndex&)
 
 void MainWindow::on_tasksTable_doubleClicked(const QModelIndex&)
 {
+    if (_user->userType() == SystemUserType::WORKER) return;
+
 
 }
 
