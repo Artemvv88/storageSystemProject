@@ -2,7 +2,7 @@
 
 Task::Task()
 {
-
+    
 }
 
 TaskID Task::id() const
@@ -28,4 +28,14 @@ SystemUserType Task::executorGroup() const
 void Task::setExecutorGroup(const SystemUserType &executorGroup)
 {
     _executorGroup = executorGroup;
+}
+
+bool Task::done() const
+{
+    return _done;
+}
+
+void Task::setDone(bool done)
+{
+    _done = done;
 }

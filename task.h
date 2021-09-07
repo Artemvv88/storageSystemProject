@@ -16,6 +16,7 @@ private:
     TaskID _id;
     QString _description;
     SystemUserType _executorGroup;
+    bool _done = false;
 
 public:
     Task();
@@ -25,6 +26,8 @@ public:
     void setDescription(const QString &description);
     SystemUserType executorGroup() const;
     void setExecutorGroup(const SystemUserType &executorGroup);
+    bool done() const;
+    void setDone(bool done);
 
     friend class Database;
 };
